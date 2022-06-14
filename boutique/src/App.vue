@@ -1,16 +1,46 @@
+//------html------------------------//
 <template>
-  <h1 class="b1">bonjour le monde</h1>
-  <div class="essai"></div>
+  <div class="app-container">
+    <!--composants-->
+    <theheader class="header b1" />
+    <Shops class="shop b2" />
+    <Carte class="carte b3" />
+    <thefooter class="footer b4" />
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+//-------------javascript typecript--------------
+<script setup lang="ts">
+// on importe les composants
+import theheader from "./components/Header.vue";
+import thefooter from "./components/Footer.vue";
+import Shops from "./components/Shops.vue";
+import Carte from "./components/Carte.vue";
+</script>
 
+//-------scss------------------------------------
 <style lang="scss">
 @import "./assets/base.scss";
-.essai {
-  display: flex;
-  width: 200px;
-  height: 50px;
-  background-color: $colorprimary-1;
+
+// on crée une grille pour placer nos éléments
+.app-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-areas: "header header" "shop carte" "footer footer";
+  grid-template-columns: 75% 25%;
+  grid-template-rows: 48px auto 48px;
+}
+
+.header {
+  grid-area: header;
+}
+.shop {
+  grid-area: shop;
+}
+.carte {
+  grid-area: carte;
+}
+.footer {
+  grid-area: footer;
 }
 </style>
