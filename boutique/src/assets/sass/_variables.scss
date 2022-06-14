@@ -9,3 +9,10 @@ $colorgray-1: #f6f6f6;
 $colorgray-2: #ddd;
 $colortext: #444;
 $colortext-primary: white;
+
+// text polices
+$font-familly: "Roboto", sans-serif;
+
+// border
+$colorborder: 1px solid var(--colorgray-2);
+$colorborder-radius: 4px;

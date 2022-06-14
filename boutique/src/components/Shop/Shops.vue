@@ -1,12 +1,15 @@
 //------html------------------------//
 <template>
   <div>
-    <h1>Cart</h1>
+    <ShopsProductlist />
   </div>
 </template>
 
 //-------------javascript typecript--------------
-<script setup lang="ts"></script>
+<script setup lang="ts">
+//on importe le fichier ShopsProductlist
+import ShopsProductlist from "./ShopsProductlist.vue";
+</script>
 
 //-------scss------------------------------------
 <style lang="scss" scoped></style>

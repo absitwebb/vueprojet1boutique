@@ -14,8 +14,8 @@
 // on importe les composants
 import theheader from "./components/Header.vue";
 import thefooter from "./components/Footer.vue";
-import Shops from "./components/Shops.vue";
-import Carte from "./components/Carte.vue";
+import Shops from "./components/Shop/Shops.vue";
+import Carte from "./components/Cart/Carte.vue";
 </script>
 
 //-------scss------------------------------------
