@@ -18,7 +18,7 @@
 .justify-content-center {
   justify-content: center;
 }
-.align-items {
+.align-items-center {
   align-items: center;
 }
 
@@ -31,6 +31,12 @@
 //marge intérieur 10px
 .p-10 {
   padding: 10px;
+}
+
+//padding horizontal droite et gauche
+.px-20 {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 //marge intérieur 20px
 .p-20 {
@@ -45,6 +51,14 @@
 //marge exterieure 10px
 .m-10 {
   margin: 10px;
+}
+//marge exterieure 20px
+.mr-20 {
+  margin: 20px;
+}
+// marge droite 10px
+.mr-10 {
+  margin-right: 10px;
 }
 
 //marge exterieure bas 10px

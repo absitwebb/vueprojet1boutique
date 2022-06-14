@@ -2,7 +2,7 @@
 <template>
   <div class="app-container">
     <!--composants-->
-    <theheader class="header b1" />
+    <theheader class="header" />
     <Shops class="shop b2" />
     <Carte class="carte b3" />
     <thefooter class="footer b4" />

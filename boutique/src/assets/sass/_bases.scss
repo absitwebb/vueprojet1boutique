@@ -23,7 +23,8 @@ img {
 
 // lien
 a {
-  color: var(--colortext);
+  color: $colortext;
+  text-decoration: none;
 }
 
 body {
