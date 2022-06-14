@@ -1,0 +1,43 @@
+:root {
+  $colorboder: 1px solid var(--colorgray-2);
+  $colorborder-radius: 4px;
+
+  $font-familly: "Roboto", sans-serif;
+}
+
+//definie dimensions éléments
+* {
+  box-sizing: border-box;
+}
+// enlever marges titres
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+// enlever point des listes
+// marge intérieur à zéro
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+// image max à 100% pour pas quelles dépassent
+img {
+  max-width: 100px;
+}
+
+// lien
+a {
+  color: var(--colortext);
+}
+
+body {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  font-family: var (--font-familly);
+  color: var(--colortext);
+  background-color: $colorgray-1;
+}

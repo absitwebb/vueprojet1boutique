@@ -1,0 +1,57 @@
+// -------------classes de base----------------------
+//flex
+.d-flex {
+  display: flex;
+}
+
+// definir la direction
+.flex-row {
+  flex-direction: row;
+}
+
+// definir la colonne
+.flex-columm {
+  flex-direction: column;
+}
+
+// pour centrer
+.justify-content-center {
+  justify-content: center;
+}
+.align-items {
+  align-items: center;
+}
+
+//pour prendre l'espace disponible
+.flex-fill {
+  flex: 1 1 auto;
+}
+
+// marges interieurs de base (padding)
+//marge intérieur 10px
+.p-10 {
+  padding: 10px;
+}
+//marge intérieur 20px
+.p-20 {
+  padding: 20px;
+}
+//marge intérieur 30px
+.p-30 {
+  padding: 30px;
+}
+
+// marges exterieures de base (margin)
+//marge exterieure 10px
+.m-10 {
+  margin: 10px;
+}
+//marge exterieure 20px
+.m-20 {
+  margin: 20px;
+}
+//marge exterieure 30px
+.m-30 {
+  margin: 30px;
+}
+//--------fin classes de base-------------------------
