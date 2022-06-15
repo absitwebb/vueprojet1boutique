@@ -3,16 +3,24 @@
   <!--container carte-->
   <div class="product d-flex flex-column">
     <!--container image-->
-    <div class="product-image"></div>
+    <!--la propriété style background-image est transformé en camelcase;obligé
+    dans le template-->
+    <div
+      class="product-image"
+      :style="{ backgroundImage: `url(${product.image})` }"
+    ></div>
+
     <!--container description et prix-->
     <div class="p-10 d-flex flex-column">
-      <h4>mac book pro</h4>
+      <!--on récupere le titre du produit dans product-->
+      <h4>{{ product.title }}</h4>
+      <!--on récupère la description du produit dans product-->
       <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur
-        molestiae quidem.
+        {{ product.description }}
       </p>
       <div class="d-flex flex-row align-items-center">
-        <strong class="flex-fill">prix: 1500€</strong>
+        <!--on récupère la description du produit dans product-->
+        <strong class="flex-fill">prix:{{ product.price }}€ </strong>
         <button class="btn btn-primary">Ajouter au panier</button>
       </div>
     </div>
@@ -20,7 +28,14 @@
 </template>
 
 //-------------javascript typecript--------------
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { ProductInterface } from "@/interfaces/product.interface";
+
+//on definie les propriétes du produit
+defineProps<{
+  product: ProductInterface;
+}>();
+</script>
 
 //-------scss------------------------------------
 <style lang="scss" scoped>
@@ -33,7 +48,7 @@
   &-image {
     border-top-right-radius: $colorborder-radius;
     border-top-left-radius: $colorborder-radius;
-    background-image: url(../../assets/img/macbookpro.jpg);
+
     background-size: cover;
 
     background-position: center;

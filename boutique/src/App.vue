@@ -3,7 +3,10 @@
   <div class="app-container">
     <!--composants-->
     <theheader class="header" />
-    <Shops class="shop" />
+
+    //product ou se trouvent les produits, on envoi à shops.vue
+    <Shops :products="products" class="shop" />
+
     <Carte class="carte" />
     <thefooter class="footer" />
   </div>
@@ -16,6 +19,13 @@ import theheader from "./components/Header.vue";
 import thefooter from "./components/Footer.vue";
 import Shops from "./components/Shop/Shops.vue";
 import Carte from "./components/Cart/Carte.vue";
+import data from "./data/product";
+import { reactive } from "vue";
+import type { ProductInterface } from "./interfaces/product.interface";
+
+//contient tous nos produits
+// ProductInterface permet de vérifier que les produits correspondent aux types définie dans ProductInterface
+const products = reactive<ProductInterface[]>(data);
 </script>
 
 //-------scss------------------------------------

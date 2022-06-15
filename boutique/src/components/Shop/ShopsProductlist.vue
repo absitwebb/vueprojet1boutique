@@ -1,14 +1,9 @@
 //------html------------------------//
 <template>
   <div class="grid p-20">
-    <ShopsProduct />
-    <ShopsProduct />
-    <ShopsProduct />
-    <ShopsProduct />
-    <ShopsProduct />
-    <ShopsProduct />
-    <ShopsProduct />
-    <ShopsProduct />
+    <!-- on fait une boucle for pour récupéer chaque produit de products // et le
+    mettre dans le composant ShopsProduct-->
+    <ShopsProduct v-for="i in products" :product="i" />
   </div>
 </template>
 
@@ -16,6 +11,12 @@
 <script setup lang="ts">
 //on importe le fichier ShopsProduct
 import ShopsProduct from "./ShopsProduct.vue";
+import type { ProductInterface } from "@/interfaces/product.interface";
+//on define propriété de la clé product que l'on recoit de app.vue
+//on type products grace à l'interface ProductInterface
+defineProps<{
+  products: ProductInterface[];
+}>();
 </script>
 
 //-------scss------------------------------------
