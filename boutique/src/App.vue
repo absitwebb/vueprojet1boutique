@@ -3,9 +3,9 @@
   <div class="app-container">
     <!--composants-->
     <theheader class="header" />
-    <Shops class="shop b2" />
+    <Shops class="shop" />
     <Carte class="carte b3" />
-    <thefooter class="footer b4" />
+    <thefooter class="footer" />
   </div>
 </template>
 

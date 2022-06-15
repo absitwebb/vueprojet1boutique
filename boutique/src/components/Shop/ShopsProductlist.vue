@@ -23,7 +23,7 @@ import ShopsProduct from "./ShopsProduct.vue";
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-auto-rows: 300px;
+  grid-auto-rows: 400px;
   gap: 20px;
 }
 </style>

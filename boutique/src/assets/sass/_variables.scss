@@ -7,6 +7,8 @@ $colorsuccess-1: #2ecc71;
 $colorsuccess-2: #27ae60;
 $colorgray-1: #f6f6f6;
 $colorgray-2: #ddd;
+$colorgray-3: #34495e;
+
 $colortext: #444;
 $colortext-primary: white;
 
@@ -14,5 +16,5 @@ $colortext-primary: white;
 $font-familly: "Roboto", sans-serif;
 
 // border
-$colorborder: 1px solid var(--colorgray-2);
+$colorborder: 1px solid $colorgray-2;
 $colorborder-radius: 4px;

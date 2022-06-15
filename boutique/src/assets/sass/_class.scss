@@ -10,7 +10,7 @@
 }
 
 // definir la colonne
-.flex-columm {
+.flex-column {
   flex-direction: column;
 }
 
@@ -74,3 +74,30 @@
   margin: 30px;
 }
 //--------fin classes de base-------------------------
+
+//buttons
+.btn {
+  padding: 8px 15px;
+  border: 0;
+  border-radius: $colorborder-radius;
+  cursor: pointer;
+  font-weight: 500;
+
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: $colorprimary-1;
+  color: $colortext-primary;
+  &:hover {
+    background-color: $colorprimary-2;
+  }
+}
+
+.btn-danger {
+  background-color: $colordanger-1;
+  color: $colortext-primary;
+  :hover {
+    background-color: $colordanger-2;
+  }
+}

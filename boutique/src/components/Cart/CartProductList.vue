@@ -1,6 +1,6 @@
 //------html------------------------//
 <template>
-  <div class="d-flex flex-columm">
+  <div class="d-flex flex-column">
     <CartProduct />
     <CartProduct />
     <CartProduct />
