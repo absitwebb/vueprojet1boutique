@@ -4,7 +4,7 @@
     <!--composants-->
     <theheader class="header" />
     <Shops class="shop" />
-    <Carte class="carte b3" />
+    <Carte class="carte" />
     <thefooter class="footer" />
   </div>
 </template>
@@ -39,6 +39,8 @@ import Carte from "./components/Cart/Carte.vue";
 }
 .carte {
   grid-area: carte;
+  border-left: $colorborder;
+  background-color: white;
 }
 .footer {
   grid-area: footer;
