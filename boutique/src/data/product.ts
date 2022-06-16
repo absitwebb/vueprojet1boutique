@@ -1,5 +1,6 @@
 export default [
   {
+    id: 1,
     image: "src/assets/img/macbookpro.jpg",
     title: "mac book pro",
     description:
@@ -7,7 +8,8 @@ export default [
     price: 1500,
   },
   {
-    image: "src/assets/img/lenovo.png",
+    id: 2,
+    image: "src/assets/img/lenovo.pro.png",
     title: "Levono Pro",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicingedolor tempore ipsam cum ipsum reiciendis",

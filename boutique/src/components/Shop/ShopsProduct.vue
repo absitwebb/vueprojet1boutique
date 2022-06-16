@@ -21,7 +21,12 @@
       <div class="d-flex flex-row align-items-center">
         <!--on récupère la description du produit dans product-->
         <strong class="flex-fill">prix:{{ product.price }}€ </strong>
-        <button class="btn btn-primary">Ajouter au panier</button>
+        <button
+          class="btn btn-primary"
+          @click="emit('addProductToCart', product.id)"
+        >
+          Ajouter au panier
+        </button>
       </div>
     </div>
   </div>
@@ -34,6 +39,14 @@ import type { ProductInterface } from "@/interfaces/product.interface";
 //on definie les propriétes du produit
 defineProps<{
   product: ProductInterface;
+}>();
+
+//defineEmits pour déclarer un évenement
+//  l'evenement est add-product-to-cart qui se trouve dans le template
+// on transforme add-product-to-cart en addProductToCart (camelcase)
+//on lui passe aussi une information qu'on à besoin qui est id du produit
+const emit = defineEmits<{
+  (e: "addProductToCart", productId: number): void;
 }>();
 </script>
 
