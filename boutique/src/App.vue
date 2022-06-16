@@ -14,7 +14,11 @@
       class="shop"
     />
     <!--composant pour affichier le panier -->
-    <Carte class="carte" />
+    <Carte
+      :cart="state.cart"
+      class="carte"
+      @remove-product-from-cart="removeProductFromCart"
+    />
     <!--composant footer-->
     <thefooter class="footer" />
   </div>
@@ -48,7 +52,7 @@ const state = reactive<{
   products: data,
   cart: [],
 });
-
+//-----------------------------------------------------------
 //fonction pour ajouter le produit dans le panier
 // cette fonction doit recevoir id du produit en paramétre
 function addProductToCart(productId: number): void {
@@ -60,6 +64,13 @@ function addProductToCart(productId: number): void {
     // on met le produit dans le pannier (...en mettant 3 petits point on fait une deconstuction)
     state.cart.push({ ...product });
   }
+} //----------------------------------------------------------------
+// fonction pour supprimer le produit qu'on on clique sur supprimer
+// elle récupère en paramètre le productID
+function removeProductFromCart(productId: number): void {
+  // on vérifié que tous le produits dans le panier non pas l'id du produit que l'on veut supprimer
+  // filter retourne un nouveau tableau avec tous produits avec un id différent du produit id que l'on veut supprimer
+  state.cart = state.cart.filter((product) => product.id !== productId);
 }
 </script>
 
