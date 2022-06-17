@@ -36,6 +36,7 @@ import data from "./data/product";
 import { reactive } from "vue";
 // import de l'interface ProductInterface se trouant dans le fichier  product.interface.ts
 import type { ProductInterface } from "./interfaces/product.interface";
+import type { ProductCartInterface } from "./interfaces";
 
 //contient tous nos produits
 // ProductInterface permet de vérifier que les produits correspondent aux types définie dans ProductInterface
@@ -46,7 +47,7 @@ import type { ProductInterface } from "./interfaces/product.interface";
 const state = reactive<{
   //on défini les propriétés ou type
   products: ProductInterface[];
-  cart: ProductInterface[];
+  cart: ProductCartInterface[];
 }>({
   // on initilise les variables
   products: data,
@@ -56,21 +57,38 @@ const state = reactive<{
 //fonction pour ajouter le produit dans le panier
 // cette fonction doit recevoir id du produit en paramétre
 function addProductToCart(productId: number): void {
-  //on récupère id du produit dans state.products grace à find qui va itéré sur chacun des produits du tableau
+  //on récupère le produit dans state.products grace à find qui va itéré sur chacun des produits du tableau
   // jusqu'a il trouve l'id du produit qui est égal à ProductId
   const product = state.products.find((product) => product.id === productId);
-  // on vérifie si on n'a bien un produit et si le produit de se trouve pas déja dans le panier
-  if (product && !state.cart.find((product) => product.id === productId)) {
-    // on met le produit dans le pannier (...en mettant 3 petits point on fait une deconstuction)
-    state.cart.push({ ...product });
+  // on vérifie si on n'a bien un produit et si le produit est égal à l'element que l'on veut ajouter
+  if (product) {
+    const productInCart = state.cart.find(
+      (product) => product.id === productId
+    );
+    if (productInCart) {
+      productInCart.quantity++;
+    }
+    //sinon si il y à qu'un produit
+    else {
+      state.cart.push({ ...product, quantity: 1 });
+    }
   }
 } //----------------------------------------------------------------
 // fonction pour supprimer le produit qu'on on clique sur supprimer
 // elle récupère en paramètre le productID
 function removeProductFromCart(productId: number): void {
-  // on vérifié que tous le produits dans le panier non pas l'id du produit que l'on veut supprimer
-  // filter retourne un nouveau tableau avec tous produits avec un id différent du produit id que l'on veut supprimer
-  state.cart = state.cart.filter((product) => product.id !== productId);
+  //on commence à récuperer le produit
+  const productFromCart = state.cart.find(
+    (product) => product.id === productId
+  );
+  if (productFromCart) {
+    if (productFromCart.quantity === 1) {
+      // filter retourne un nouveau tableau avec tous produits avec un id différent du produit id que l'on veut supprimer
+      state.cart = state.cart.filter((product) => product.id !== productId);
+    } else {
+      productFromCart.quantity--;
+    }
+  }
 }
 </script>
 

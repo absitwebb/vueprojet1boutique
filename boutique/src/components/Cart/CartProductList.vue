@@ -14,13 +14,14 @@
 <script setup lang="ts">
 //on importe le fichier CartProduct
 import CartProduct from "./CartProduct.vue";
-//on importe l'interface ProductInterface du fichier product.interface.ts
-import type { ProductInterface } from "@/interfaces/product.interface";
+//on importe l'interface ProductCartInterface du fichier productCarte.interface.ts
+
+import type { ProductCartInterface } from "@/interfaces";
 
 //on defini les propriétés de cart que l'on à récupéré depuis carte.vue
 //entre <> on défini le type typscript
 defineProps<{
-  cart: ProductInterface[];
+  cart: ProductCartInterface[];
 }>();
 
 //on definie l"evenement (sur le bouton supprimer)

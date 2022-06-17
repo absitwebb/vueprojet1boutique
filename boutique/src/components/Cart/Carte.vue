@@ -12,14 +12,15 @@
 
 //-------------javascript typecript--------------
 <script setup lang="ts">
+//on importe l'interface ProductCartInterface du fichier productCart.interface.ts
+import type { ProductCartInterface } from "@/interfaces";
 //on importe le fichier CartProductList
-import type { ProductInterface } from "@/interfaces/product.interface";
 import CartProductList from "./CartProductList.vue";
 
 //on defini les propriétés de cart que l'on à récupéré depuis app.vue
 //entre <> on défini le type typscript
 defineProps<{
-  cart: ProductInterface[];
+  cart: ProductCartInterface[];
 }>();
 
 //on definie l"evenement (sur le bouton supprimer)
