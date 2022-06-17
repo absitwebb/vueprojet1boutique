@@ -1,6 +1,6 @@
 //------html------------------------//
 <template>
-  <div class="app-container">
+  <div class="app-container" :class="{ gridEmpty: cartEmpty }">
     <!--composants-->
     <!--composant header-->
     <theheader class="header" />
@@ -14,7 +14,9 @@
       class="shop"
     />
     <!--composant pour affichier le panier -->
+    <!--si carte est suprérieur à 0 on affiche le reste-->
     <Carte
+      v-if="!cartEmpty"
       :cart="state.cart"
       class="carte"
       @remove-product-from-cart="removeProductFromCart"
@@ -33,7 +35,7 @@ import Shops from "./components/Shop/Shops.vue";
 import Carte from "./components/Cart/Carte.vue";
 // import des produits qui setrouvent dans le fichier product.ts
 import data from "./data/product";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 // import de l'interface ProductInterface se trouant dans le fichier  product.interface.ts
 import type { ProductInterface } from "./interfaces/product.interface";
 import type { ProductCartInterface } from "./interfaces";
@@ -90,6 +92,8 @@ function removeProductFromCart(productId: number): void {
     }
   }
 }
+//si panier est égal à 0 cartEmpty sera true
+const cartEmpty = computed(() => state.cart.length === 0);
 </script>
 
 //-------scss------------------------------------
@@ -103,6 +107,11 @@ function removeProductFromCart(productId: number): void {
   grid-template-areas: "header header" "shop carte" "footer footer";
   grid-template-columns: 75% 25%;
   grid-template-rows: 48px auto 48px;
+}
+
+.gridEmpty {
+  grid-template-areas: "header " "shop" "footer";
+  grid-template-columns: 100%;
 }
 
 .header {

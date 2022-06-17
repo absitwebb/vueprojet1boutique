@@ -101,3 +101,10 @@
     background-color: $colordanger-2;
   }
 }
+.btn-success {
+  background-color: $colorsuccess-1;
+  color: $colortext-primary;
+  :hover {
+    background-color: $colorsuccess-2;
+  }
+}
