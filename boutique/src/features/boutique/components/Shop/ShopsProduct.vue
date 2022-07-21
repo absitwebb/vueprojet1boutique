@@ -52,7 +52,7 @@ const emit = defineEmits<{
 
 //-------scss------------------------------------
 <style lang="scss" scoped>
-@import "../../assets/base.scss";
+@import "../../../../assets/base.scss";
 .product {
   background-color: white;
   padding-top: 20px;

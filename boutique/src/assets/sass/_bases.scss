@@ -25,6 +25,7 @@ img {
 a {
   color: $colortext;
   text-decoration: none;
+  cursor: pointer;
 }
 
 body {
@@ -34,4 +35,11 @@ body {
   font-family: $font-familly;
   color: $colortext;
   background-color: $colorgray-1;
+}
+//card
+.card {
+  border: $colorborder;
+  border-radius: $colorborder-radius;
+  background-color: white;
+  padding: 30px;
 }

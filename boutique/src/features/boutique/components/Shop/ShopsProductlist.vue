@@ -7,6 +7,7 @@
     <ShopsProduct
       @add-product-to-cart="emit('addProductToCart', $event)"
       v-for="i in products"
+      :key="i.id"
       :product="i"
     />
   </div>

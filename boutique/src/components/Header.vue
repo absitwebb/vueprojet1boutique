@@ -9,10 +9,18 @@
     <!------liste gauche--------->
     <ul class="d-flex flex-row flex-fill">
       <li class="mr-10">
-        <a href="#">Boutique</a>
+        <a
+          :class="{ active: page === 'boutique' }"
+          @click="emit('navigate', 'boutique')"
+          >Boutique</a
+        >
       </li>
       <li>
-        <a href="#">Admin</a>
+        <a
+          :class="{ active: page === 'Admin' }"
+          @click="emit('navigate', 'Admin')"
+          >Admin</a
+        >
       </li>
     </ul>
     <!------liste droite--------->
@@ -28,7 +36,18 @@
 </template>
 
 //-------------javascript typecript--------------
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { Page } from "@/interfaces";
+
+//-------propriétés-----------
+defineProps<{
+  page: Page;
+}>();
+
+const emit = defineEmits<{
+  (e: "navigate", page: Page): void;
+}>();
+</script>
 
 //-------scss------------------------------------
 <style lang="scss" scoped>
@@ -45,6 +64,9 @@ header {
       font-weight: 700;
       font-size: 20px;
     }
+  }
+  a.active {
+    text-decoration: underline;
   }
 }
 </style>

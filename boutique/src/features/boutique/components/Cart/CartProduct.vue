@@ -32,7 +32,7 @@ const emit = defineEmits<{
 
 //-------scss------------------------------------
 <style lang="scss" scoped>
-@import "../../assets/base.scss";
+@import "../../../../assets/base.scss";
 .product {
   border: $colorborder;
   border-radius: $colorborder-radius;

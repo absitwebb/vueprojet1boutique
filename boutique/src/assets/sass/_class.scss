@@ -48,6 +48,11 @@
 }
 
 // -----marges exterieures de base (margin)----------
+//marge exterieure 5px
+.mb-5 {
+  margin-bottom: 5px;
+}
+
 //marge exterieure 10px
 .m-10 {
   margin: 10px;
@@ -64,6 +69,11 @@
 //marge exterieure bas 10px
 .mb-10 {
   margin-bottom: 10px;
+}
+
+//marge exterieure bas 20px
+.mb-20 {
+  margin-bottom: 20px;
 }
 //marge exterieure 20px
 .m-20 {
@@ -107,4 +117,10 @@
   :hover {
     background-color: $colorsuccess-2;
   }
+}
+
+input {
+  border: $colorborder;
+  border-radius: $colorborder-radius;
+  padding: 8px 15px;
 }
