@@ -119,8 +119,22 @@
   }
 }
 
-input {
+input,
+textarea,
+select {
   border: $colorborder;
   border-radius: $colorborder-radius;
   padding: 8px 15px;
+}
+
+labe {
+  font-size: 14px;
+  font-weight: 500;
+  color: $colorgray-3;
+}
+
+.form-error {
+  color: $colordanger-1;
+  font-size: 14px;
+  font-weight: 500;
 }
