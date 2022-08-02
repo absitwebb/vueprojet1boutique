@@ -6,7 +6,7 @@
       <!--__________________________title_____________________________-->
       <div class="d-flex flex-column mb-20">
         <label class="mb-5">*Titre</label>
-        <input v-model="title.value.value" type="text" />
+        <input ref="firstInput" v-model="title.value.value" type="text" />
         <small class="form-error" v-if="title.errorMessage.value">{{
           title.errorMessage.value
         }}</small>
@@ -63,7 +63,14 @@
 import { useForm, useField } from "vee-validate";
 import { z } from "zod";
 import { toFormValidator } from "@vee-validate/zod";
+import { onMounted, ref } from "vue";
 
+//on déclare firstInput dans input title avec comme type HTMLInputElement ou null. on mets null cimme valeur par défault
+// on monte firstInput (onMounted) après la validation du formulaire
+const firstInput = ref<HTMLInputElement | null>(null);
+onMounted(() => {
+  firstInput.value?.focus();
+});
 const required = { required_error: "veuillez renseigner ce champs" };
 
 //--------schéma de validation--------------------
@@ -72,12 +79,12 @@ const validationSchema = toFormValidator(
     title: z
       .string(required)
       .min(1, { message: "le titre doit faire au moins un caractère" })
-      .max(10, { message: "le titre doit faire moins de 10 caractères" }),
+      .max(20, { message: "le titre doit faire moins de 10 caractères" }),
     image: z.string(required),
     price: z
       .number(required)
       .min(0, { message: "le prix doit être superieur à 0" })
-      .min(15000, { message: "Le prix doit être inferieur à 15000" }),
+      .max(15000, { message: "Le prix doit être inferieur à 15000" }),
     description: z
       .string(required)
       .min(10, { message: "La description doit faire au moins 10 caractères" }),
@@ -97,8 +104,21 @@ const description = useField("description");
 const category = useField("category");
 
 //---submit-----------------
-const trySubmit = handleSubmit((formValues) => {
-  console.log(formValues);
+const trySubmit = handleSubmit(async (formValues, { resetForm }) => {
+  try {
+    await fetch("https://restapi.fr/api/projetproducts", {
+      method: "POST",
+      body: JSON.stringify(formValues),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    resetForm();
+    firstInput.value?.focus();
+  } catch (e) {
+    console.log(e);
+  }
 });
 </script>
 

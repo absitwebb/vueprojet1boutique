@@ -12,7 +12,7 @@
     <!--avec @add-product-to-cart on remonte l'information à shops-->
     <!--$event previent de l'element qui sera imit depuis le composant ShopsProductlist-->
     <ShopsProductlist
-      class="flex-fill"
+      class="flex-fill scrollable"
       :products="products"
       @add-product-to-cart="emit('addProductToCart', $event)"
     />
@@ -38,7 +38,7 @@ defineProps<{
 // on transforme add-product-to-cart en addProductToCart (camelcase)
 //on lui passe aussi une information qu'on à besoin qui est id du produit
 const emit = defineEmits<{
-  (e: "addProductToCart", productId: number): void;
+  (e: "addProductToCart", productId: string): void;
   (e: "updateFilter", updateFilters: filterUpdate): void;
 }>();
 </script>
@@ -47,5 +47,9 @@ const emit = defineEmits<{
 <style lang="scss" scoped>
 .shop-filter {
   flex: 0 0 200px;
+}
+.scrollable {
+  overflow-y: auto;
+  height: calc(100vh - 96px);
 }
 </style>

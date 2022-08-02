@@ -7,7 +7,7 @@
     <ShopsProduct
       @add-product-to-cart="emit('addProductToCart', $event)"
       v-for="i in products"
-      :key="i.id"
+      :key="i._id"
       :product="i"
     />
   </div>
@@ -29,15 +29,26 @@ defineProps<{
 // on transforme add-product-to-cart en addProductToCart (camelcase)
 //on lui passe aussi une information qu'on à besoin qui est id du produit
 const emit = defineEmits<{
-  (e: "addProductToCart", productId: number): void;
+  (e: "addProductToCart", productId: string): void;
 }>();
 </script>
 
 //-------scss------------------------------------
 <style lang="scss" scoped>
+@import "../../../../assets/base.scss";
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+
+  @include md {
+    grid-template-columns: 1fr 1fr;
+  }
+  @include lg {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @include xl {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
   grid-auto-rows: 400px;
   gap: 20px;
 }

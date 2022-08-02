@@ -24,7 +24,7 @@ import Shops from "./components/Shop/Shops.vue";
 import Carte from "./components/Cart/Carte.vue";
 // import des produits qui setrouvent dans le fichier product.ts
 import data from "../../data/product";
-import { computed, reactive } from "vue";
+import { computed, reactive, watchEffect } from "vue";
 // import de l'interface ProductInterface se trouant dans le fichier  product.interface.ts
 import type { ProductInterface } from "../../interfaces/product.interface";
 import type {
@@ -33,6 +33,8 @@ import type {
   filterUpdate,
 } from "../../interfaces";
 import { DEFAULT_FILTERS } from "../../features/boutique/data/filters";
+import { fectProduct } from "@/shared/services/product.services";
+import { array } from "zod";
 
 //contient tous nos produits
 // ProductInterface permet de vérifier que les produits correspondent aux types définie dans ProductInterface
@@ -47,21 +49,33 @@ const state = reactive<{
   filters: filtersInterface;
 }>({
   // on initilise les variables
-  products: data,
+  products: [],
   cart: [],
   filters: { ...DEFAULT_FILTERS },
+});
+// on va chercher les produits avec fetch
+// si fetch renvoie tableau Array.isArray(products) on copie  dans  state.products
+// si fetch renvoie un objet(juste un article) on copie dans un tableau puis dans  state.products
+
+watchEffect(async () => {
+  const products = await fectProduct(state.filters);
+  if (Array.isArray(products)) {
+    state.products = products;
+  } else {
+    state.products = [products];
+  }
 });
 //-----------------------------------------------------------
 //fonction pour ajouter le produit dans le panier
 // cette fonction doit recevoir id du produit en paramétre
-function addProductToCart(productId: number): void {
+function addProductToCart(productId: string): void {
   //on récupère le produit dans state.products grace à find qui va itéré sur chacun des produits du tableau
   // jusqu'a il trouve l'id du produit qui est égal à ProductId
-  const product = state.products.find((product) => product.id === productId);
+  const product = state.products.find((product) => product._id === productId);
   // on vérifie si on n'a bien un produit et si le produit est égal à l'element que l'on veut ajouter
   if (product) {
     const productInCart = state.cart.find(
-      (product) => product.id === productId
+      (product) => product._id === productId
     );
     if (productInCart) {
       productInCart.quantity++;
@@ -74,15 +88,15 @@ function addProductToCart(productId: number): void {
 } //----------------------------------------------------------------
 // fonction pour supprimer le produit qu'on on clique sur supprimer
 // elle récupère en paramètre le productID
-function removeProductFromCart(productId: number): void {
+function removeProductFromCart(productId: string): void {
   //on commence à récuperer le produit
   const productFromCart = state.cart.find(
-    (product) => product.id === productId
+    (product) => product._id === productId
   );
   if (productFromCart) {
     if (productFromCart.quantity === 1) {
       // filter retourne un nouveau tableau avec tous produits avec un id différent du produit id que l'on veut supprimer
-      state.cart = state.cart.filter((product) => product.id !== productId);
+      state.cart = state.cart.filter((product) => product._id !== productId);
     } else {
       productFromCart.quantity--;
     }

@@ -6,7 +6,10 @@
     <theheader @navigate="navigate" :page="state.page" class="header" />
     <!--____________composants dynamique-->
     <div class="app-content">
-      <Component :is="pages[state.page]" />
+      <!--suspense permet d'afficher un template spécifique pendant le chargement des différentes ressources asynchrones.-->
+      <Suspense>
+        <Component :is="pages[state.page]" />
+      </Suspense>
     </div>
     <!--composant footer-->
     <thefooter class="footer" />
@@ -22,6 +25,7 @@ import boutique from "./features/boutique/boutique.vue";
 import Admin from "./features/admin/Admin.vue";
 import { reactive, type Component as C } from "vue";
 import type { Page } from "./interfaces";
+import { seed, seed50articles } from "./data/seed";
 //------reactive----------------------------------
 const state = reactive<{
   page: Page;
@@ -38,6 +42,10 @@ const pages: { [s: string]: C } = {
 function navigate(page: Page): void {
   state.page = page;
 }
+//fonction pour envoyer tous les produits sur restapi.fr
+// les données sur le site restent 10heures
+//seed("vueprojectproducts");
+//seed50articles("vueprojectproducts");
 </script>
 
 //-------scss------------------------------------
@@ -46,7 +54,7 @@ function navigate(page: Page): void {
 
 // on crée une grille pour placer nos éléments
 .app-container {
-  min-height: 100vh;
+  height: 100vh;
   display: grid;
   grid-template-areas: "header " "app-content" "footer";
 

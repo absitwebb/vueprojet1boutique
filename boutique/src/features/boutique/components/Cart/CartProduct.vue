@@ -6,7 +6,7 @@
     <span class="mr-10">Prix: {{ product.price }}€ </span>
     <button
       class="btn btn-danger"
-      @click="emit('removeProductFromCart', product.id)"
+      @click="emit('removeProductFromCart', product._id)"
     >
       supprimer
     </button>
@@ -26,7 +26,7 @@ defineProps<{
 
 //on definie l"evenement (sur le bouton supprimer)
 const emit = defineEmits<{
-  (e: "removeProductFromCart", productId: number): void;
+  (e: "removeProductFromCart", productId: string): void;
 }>();
 </script>
 
