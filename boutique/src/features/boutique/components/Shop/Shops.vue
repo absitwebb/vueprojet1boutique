@@ -14,7 +14,9 @@
     <ShopsProductlist
       class="flex-fill scrollable"
       :products="products"
+      :more-results="moreResults"
       @add-product-to-cart="emit('addProductToCart', $event)"
+      @inc-page="emit('incPage')"
     />
   </div>
 </template>
@@ -31,6 +33,7 @@ import type { filtersInterface, filterUpdate } from "@/interfaces";
 defineProps<{
   products: ProductInterface[];
   filters: filtersInterface;
+  moreResults: boolean;
 }>();
 
 //defineEmits pour déclarer un évenement
@@ -40,6 +43,7 @@ defineProps<{
 const emit = defineEmits<{
   (e: "addProductToCart", productId: string): void;
   (e: "updateFilter", updateFilters: filterUpdate): void;
+  (e: "incPage"): void;
 }>();
 </script>
 

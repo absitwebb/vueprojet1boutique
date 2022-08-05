@@ -83,6 +83,14 @@
 .m-30 {
   margin: 30px;
 }
+
+//util
+.hide-xs {
+  @include xs {
+    display: none;
+  }
+}
+
 //--------fin classes de base-------------------------
 
 //buttons

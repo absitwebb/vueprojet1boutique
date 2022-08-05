@@ -30,7 +30,7 @@ import { seed, seed50articles } from "./data/seed";
 const state = reactive<{
   page: Page;
 }>({
-  page: "Admin",
+  page: "boutique",
 });
 
 // on declare nos pages composants

@@ -1,7 +1,8 @@
 import type { filtersInterface, ProductInterface } from "@/interfaces";
 
 export async function fectProduct(
-  filter: filtersInterface
+  filter: filtersInterface,
+  page: number
 ): Promise<ProductInterface[] | ProductInterface> {
   const query = new URLSearchParams();
   if (filter.category !== "all") {
@@ -9,6 +10,9 @@ export async function fectProduct(
   }
   //on limite le téléchargment des produits à 20
   query.append("limit", 20 + "");
+  if (page !== 1) {
+    query.append("skip", (page - 1) * 20 + "");
+  }
   query.append("price", `$lte:${filter.priceRange[1]}`);
   query.append("price", `$gte:${filter.priceRange[0]}`);
   const products = await (

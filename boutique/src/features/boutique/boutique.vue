@@ -1,10 +1,12 @@
 <template>
-  <div class="boutique-container" :class="{ 'grid-empty': cartEmpty }">
+  <div class="d-flex flex-column">
     <Shops
       @update-filter="updateFilter"
       @add-product-to-cart="addProductToCart"
+      @inc-page="state.page++"
       :products="filteredProducts"
       :filters="state.filters"
+      :more-results="state.moreResults"
       class="shop"
     />
     <!--composant pour affichier le panier -->
@@ -24,7 +26,7 @@ import Shops from "./components/Shop/Shops.vue";
 import Carte from "./components/Cart/Carte.vue";
 // import des produits qui setrouvent dans le fichier product.ts
 import data from "../../data/product";
-import { computed, reactive, watchEffect } from "vue";
+import { computed, provide, reactive, toRef, watch, watchEffect } from "vue";
 // import de l'interface ProductInterface se trouant dans le fichier  product.interface.ts
 import type { ProductInterface } from "../../interfaces/product.interface";
 import type {
@@ -35,6 +37,7 @@ import type {
 import { DEFAULT_FILTERS } from "../../features/boutique/data/filters";
 import { fectProduct } from "@/shared/services/product.services";
 import { array } from "zod";
+import { pageKey } from "@/shared/services/injectionKeys/pageKey";
 
 //contient tous nos produits
 // ProductInterface permet de vérifier que les produits correspondent aux types définie dans ProductInterface
@@ -47,23 +50,42 @@ const state = reactive<{
   products: ProductInterface[];
   cart: ProductCartInterface[];
   filters: filtersInterface;
+  page: number;
+  isLoading: boolean;
+  moreResults: boolean;
 }>({
   // on initilise les variables
   products: [],
   cart: [],
   filters: { ...DEFAULT_FILTERS },
+  page: 1,
+  isLoading: true,
+  moreResults: true,
 });
+
+watch(state.filters, () => {
+  state.page = 1;
+  state.products = [];
+});
+
+provide(pageKey, toRef(state, "page"));
 // on va chercher les produits avec fetch
 // si fetch renvoie tableau Array.isArray(products) on copie  dans  state.products
 // si fetch renvoie un objet(juste un article) on copie dans un tableau puis dans  state.products
 
 watchEffect(async () => {
-  const products = await fectProduct(state.filters);
+  state.isLoading = true;
+  const products = await fectProduct(state.filters, state.page);
   if (Array.isArray(products)) {
-    state.products = products;
+    // on ajoute resultat dans state.products; on rajoute ensuite(...products,...products)des produits dans state.products
+    state.products = [...products, ...products];
+    if (products.length < 20) {
+      state.moreResults = false;
+    }
   } else {
-    state.products = [products];
+    state.products = [...state.products, products];
   }
+  state.isLoading = false;
 });
 //-----------------------------------------------------------
 //fonction pour ajouter le produit dans le panier
@@ -148,15 +170,4 @@ function updateFilter(filterUpdate: filterUpdate) {
 //-------scss------------------------------------
 <style scoped lang="scss">
 @import "../../assets/base.scss";
-.boutique-container {
-  display: grid;
-  grid-template-columns: 75% 25%;
-}
-.grid-empty {
-  grid-template-columns: 100%;
-}
-.cart {
-  background-color: white;
-  border-left: $colorborder;
-}
 </style>
