@@ -1,23 +1,33 @@
 //------html------------------------//
 <template>
-  <div class="d-flex flex-row">
+  <div class="d-flex flex-row shop-container">
     <ShopFilters
+      v-if="state.open"
       :filters="filters"
       :nbr-of-products="products.length"
       @update-filter="emit('updateFilter', $event)"
       class="shop-filter"
     />
-    <!--dans le template on place le composant ShopsProductlist-->
-    <!--on envoi à ShopsProductlist-->
-    <!--avec @add-product-to-cart on remonte l'information à shops-->
-    <!--$event previent de l'element qui sera imit depuis le composant ShopsProductlist-->
-    <ShopsProductlist
-      class="flex-fill scrollable"
-      :products="products"
-      :more-results="moreResults"
-      @add-product-to-cart="emit('addProductToCart', $event)"
-      @inc-page="emit('incPage')"
-    />
+    <div class="d-flex flex-column">
+      <button
+        class="btn btn-primary d-flex flex-row justify-content-center align-items-center"
+      >
+        <i class="fas fa-search m-10"></i>
+        <span>Rechercher</span>
+      </button>
+
+      <!--dans le template on place le composant ShopsProductlist-->
+      <!--on envoi à ShopsProductlist-->
+      <!--avec @add-product-to-cart on remonte l'information à shops-->
+      <!--$event previent de l'element qui sera imit depuis le composant ShopsProductlist-->
+      <ShopsProductlist
+        class="flex-fill scrollable"
+        :products="products"
+        :more-results="moreResults"
+        @add-product-to-cart="emit('addProductToCart', $event)"
+        @inc-page="emit('incPage')"
+      />
+    </div>
   </div>
 </template>
 
@@ -28,6 +38,7 @@ import type { ProductInterface } from "@/interfaces/product.interface";
 import ShopsProductlist from "./ShopsProductlist.vue";
 import ShopFilters from "./shopFilters.vue";
 import type { filtersInterface, filterUpdate } from "@/interfaces";
+import { reactive } from "vue";
 //on define propriété de la clé product que l'on recoit de app.vue
 //on type products grace à l'interface ProductInterface
 defineProps<{
@@ -36,6 +47,11 @@ defineProps<{
   moreResults: boolean;
 }>();
 
+const state = reactive<{
+  open: boolean;
+}>({
+  open: false,
+});
 //defineEmits pour déclarer un évenement
 //  l'evenement est add-product-to-cart qui se trouve dans le template
 // on transforme add-product-to-cart en addProductToCart (camelcase)
@@ -49,8 +65,21 @@ const emit = defineEmits<{
 
 //-------scss------------------------------------
 <style lang="scss" scoped>
+@import "@/assets/base.scss";
 .shop-filter {
   flex: 0 0 200px;
+  @include xs {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+  }
+}
+.shop-container {
+  position: relative;
+}
+button {
+  margin: 20px 20px 0 20px;
 }
 .scrollable {
   overflow-y: auto;
