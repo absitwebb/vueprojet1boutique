@@ -13,9 +13,7 @@
       </div>
       <!--_____________affichage du contenu du panier______________-->
       <div v-else>
-        <teleport to="body">
-          <div @click="state.open = false" class="calc"></div>
-        </teleport>
+        <Calc :open="true" @close="state.open = false" :transparent="true" />
 
         <div class="p-20 d-flex flex-column card ml-20">
           <h2 class="mb-10">Panier</h2>
@@ -39,6 +37,7 @@ import type { ProductCartInterface } from "@/interfaces";
 import { computed, reactive } from "vue";
 //on importe le fichier CartProductList
 import CartProductList from "./CartProductList.vue";
+import Calc from "@/components/calc.vue";
 
 const state = reactive<{
   open: boolean;
@@ -74,15 +73,6 @@ const emit = defineEmits<{
   bottom: 20px;
   right: 20px;
   z-index: 2;
-}
-.calc {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 100vh;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.246);
-  z-index: 1;
 }
 
 .tag {

@@ -10,6 +10,7 @@
     />
     <div class="d-flex flex-column">
       <button
+        @click="state.open = !state.open"
         class="btn btn-primary d-flex flex-row justify-content-center align-items-center"
       >
         <i class="fas fa-search m-10"></i>
@@ -79,7 +80,10 @@ const emit = defineEmits<{
   position: relative;
 }
 button {
-  margin: 20px 20px 0 20px;
+  margin: 20px 20px 10px 20px;
+  @include sm {
+    display: none;
+  }
 }
 .scrollable {
   overflow-y: auto;

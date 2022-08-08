@@ -12,7 +12,7 @@
       </Suspense>
     </div>
     <!--composant footer-->
-    <thefooter class="footer" />
+    <thefooter class="footer hide-xs" />
   </div>
 </template>
 
