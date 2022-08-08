@@ -1,24 +1,34 @@
 //------html------------------------//
 <template>
   <div class="cart-container">
-    <div
-      class="cart-holder d-flex flex-row justify-content-center align-items-center"
-    >
-      <span class="tag">{{ cart.length }}</span>
-      <i class="fas fa-shopping-basket"></i>
-    </div>
-    <!--
-   <div class="p-20 d-flex flex-column">
-      <h2 class="mb-10">Panier</h2>
-     on transmet l'information à CartProductListavec :cart="cart"
-      <CartProductList
-        class="flex-fill"
-        :cart="cart"
-        @remove-product-from-cart="emit('removeProductFromCart', $event)"
-      />
-      <button class="btn btn-success">Commander({{ totalPrice }}€)</button>
-    </div> 
-    -->
+    <transition mode="out-in">
+      <!--container affichage icone panier en bas à droite-->
+      <div
+        v-if="!state.open"
+        @click="state.open = !state.open"
+        class="cart-holder d-flex flex-row justify-content-center align-items-center"
+      >
+        <span class="tag">{{ cart.length }}</span>
+        <i class="fas fa-shopping-basket"></i>
+      </div>
+      <!--_____________affichage du contenu du panier______________-->
+      <div v-else>
+        <teleport to="body">
+          <div @click="state.open = false" class="calc"></div>
+        </teleport>
+
+        <div class="p-20 d-flex flex-column card ml-20">
+          <h2 class="mb-10">Panier</h2>
+          on transmet l'information à CartProductListavec :cart="cart"
+          <CartProductList
+            class="flex-fill"
+            :cart="cart"
+            @remove-product-from-cart="emit('removeProductFromCart', $event)"
+          />
+          <button class="btn btn-success">Commander({{ totalPrice }}€)</button>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -26,9 +36,15 @@
 <script setup lang="ts">
 //on importe l'interface ProductCartInterface du fichier productCart.interface.ts
 import type { ProductCartInterface } from "@/interfaces";
-import { computed } from "vue";
+import { computed, reactive } from "vue";
 //on importe le fichier CartProductList
 import CartProductList from "./CartProductList.vue";
+
+const state = reactive<{
+  open: boolean;
+}>({
+  open: false,
+});
 
 //on defini les propriétés de cart que l'on à récupéré depuis app.vue
 //entre <> on défini le type typscript
@@ -57,7 +73,18 @@ const emit = defineEmits<{
   position: fixed;
   bottom: 20px;
   right: 20px;
+  z-index: 2;
 }
+.calc {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.246);
+  z-index: 1;
+}
+
 .tag {
   width: 15px;
   font-size: 10px;
@@ -86,5 +113,15 @@ const emit = defineEmits<{
     font-size: 20px;
     color: $colortext-primary;
   }
+}
+//animation
+.v-leave-to,
+.v-enter-from {
+  transform: translateY(10px);
+  opacity: 0;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.2s;
 }
 </style>
