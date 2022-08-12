@@ -1,6 +1,6 @@
 /------html------------------------//
 <template>
-  <div class="admin-container d-flex flex-row">
+  <div class="admin-container d-flex flex-row p-20">
     <ProductForm />
   </div>
 </template>

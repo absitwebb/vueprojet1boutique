@@ -45,7 +45,7 @@ function navigate(page: Page): void {
 //fonction pour envoyer tous les produits sur restapi.fr
 // les données sur le site restent 10heures
 //seed("vueprojectproducts");
-//seed50articles("vueprojectproducts");
+seed50articles("vueprojectproducts");
 </script>
 
 //-------scss------------------------------------

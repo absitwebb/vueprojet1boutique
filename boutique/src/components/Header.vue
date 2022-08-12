@@ -38,6 +38,11 @@
       </ul>
       <!--_____________menu version mobile__________________-->
       <div class="menu-xs-container">
+        <calc
+          :open="state.open"
+          @close="state.open = false"
+          :transparent="true"
+        />
         <i @click="state.open = !state.open" class="fas fa-bars show-xs"></i>
         <transition>
           <ul @click="state.open = false" v-if="state.open" class="menu card">
@@ -72,6 +77,7 @@
 <script setup lang="ts">
 import type { Page } from "@/interfaces";
 import { reactive } from "vue";
+import Calc from "./calc.vue";
 
 const state = reactive<{
   open: boolean;
@@ -129,7 +135,7 @@ header {
     position: relative;
   }
   .menu {
-    z-index: 1;
+    z-index: 2;
     position: absolute;
     top: 20px;
     right: 0px;

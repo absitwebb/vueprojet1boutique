@@ -63,10 +63,13 @@ const state = reactive<{
   moreResults: true,
 });
 
-watch(state.filters, () => {
-  state.page = 1;
-  state.products = [];
-});
+watch(
+  () => state.filters.category && state.filters.priceRange,
+  () => {
+    state.page = 1;
+    state.products = [];
+  }
+);
 
 provide(pageKey, toRef(state, "page"));
 // on va chercher les produits avec fetch

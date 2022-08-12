@@ -13,7 +13,7 @@
       </div>
       <!--_____________affichage du contenu du panier______________-->
       <div v-else>
-        <Calc :open="true" @close="state.open = false" :transparent="true" />
+        <Calc :open="true" @close="state.open = false" />
 
         <div class="p-20 d-flex flex-column card ml-20">
           <h2 class="mb-10">Panier</h2>

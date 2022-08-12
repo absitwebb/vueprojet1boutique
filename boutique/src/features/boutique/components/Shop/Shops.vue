@@ -1,13 +1,21 @@
 //------html------------------------//
 <template>
   <div class="d-flex flex-row shop-container">
-    <ShopFilters
-      v-if="state.open"
-      :filters="filters"
-      :nbr-of-products="products.length"
-      @update-filter="emit('updateFilter', $event)"
-      class="shop-filter"
+    <Calc
+      :open="state.isMobile && state.open"
+      @close="state.open = false"
+      :transparent="true"
     />
+    <transition>
+      <ShopFilters
+        v-if="state.open"
+        :filters="filters"
+        :nbr-of-products="products.length"
+        @update-filter="emit('updateFilter', $event)"
+        class="shop-filter"
+      />
+    </transition>
+
     <div class="d-flex flex-column">
       <button
         @click="state.open = !state.open"
@@ -35,6 +43,7 @@
 //-------------javascript typecript--------------
 <script setup lang="ts">
 import type { ProductInterface } from "@/interfaces/product.interface";
+import Calc from "@/components/calc.vue";
 //on importe le fichier ShopsProductlist
 import ShopsProductlist from "./ShopsProductlist.vue";
 import ShopFilters from "./shopFilters.vue";
@@ -50,8 +59,10 @@ defineProps<{
 
 const state = reactive<{
   open: boolean;
+  isMobile: boolean;
 }>({
-  open: false,
+  open: !matchMedia("(max-with:575px)").matches,
+  isMobile: matchMedia("(max-with:575px)").matches,
 });
 //defineEmits pour déclarer un évenement
 //  l'evenement est add-product-to-cart qui se trouve dans le template
@@ -74,6 +85,7 @@ const emit = defineEmits<{
     top: 0px;
     left: 0px;
     background-color: white;
+    z-index: 2;
   }
 }
 .shop-container {
@@ -88,5 +100,14 @@ button {
 .scrollable {
   overflow-y: auto;
   height: calc(100vh - 96px);
+}
+.v-enter-from,
+.v-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.2s;
 }
 </style>
