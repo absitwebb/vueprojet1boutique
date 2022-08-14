@@ -12,20 +12,13 @@
       <!------liste gauche--------->
       <ul class="d-flex flex-row flex-fill hide-xs">
         <li class="mr-10">
-          <a
-            :class="{ active: page === 'boutique' }"
-            @click="emit('navigate', 'boutique')"
-            >Boutique</a
-          >
+          <router-link to="/boutique">Boutique </router-link>
         </li>
         <li>
-          <a
-            :class="{ active: page === 'Admin' }"
-            @click="emit('navigate', 'Admin')"
-            >Admin</a
-          >
+          <router-link to="/admin">Admin</router-link>
         </li>
       </ul>
+      >
 
       <!------liste droite--------->
       <ul class="d-flex flex-row hide-xs">
@@ -53,18 +46,10 @@
               <a href="#">Connexion</a>
             </li>
             <li>
-              <a
-                :class="{ active: page === 'boutique' }"
-                @click="emit('navigate', 'boutique')"
-                >Boutique</a
-              >
+              <router-link to="/boutique">Boutique</router-link>
             </li>
             <li>
-              <a
-                :class="{ active: page === 'Admin' }"
-                @click="emit('navigate', 'Admin')"
-                >Admin</a
-              >
+              <router-link to="/admin">Admin</router-link>
             </li>
           </ul>
         </transition>
@@ -86,13 +71,6 @@ const state = reactive<{
 });
 
 //-------propriétés-----------
-defineProps<{
-  page: Page;
-}>();
-
-const emit = defineEmits<{
-  (e: "navigate", page: Page): void;
-}>();
 </script>
 
 //-------scss------------------------------------
@@ -122,7 +100,8 @@ header {
     cursor: pointer;
   }
 
-  a.active {
+  // class definie par le routeur sur le lien actif
+  a.router-link-active {
     text-decoration: underline;
   }
 

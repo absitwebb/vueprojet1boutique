@@ -1,21 +1,28 @@
 /------html------------------------//
 <template>
   <div class="admin-container d-flex flex-row p-20">
-    <ProductForm />
+    <AdminNav class="admin-nav" />
+    <div
+      class="admin-main flex-fill d-flex flex-row justify-content-center align-items-center"
+    >
+      <RouterView></RouterView>
+    </div>
   </div>
 </template>
 
 //-------------javascript typecript--------------
 <script setup lang="ts">
-import ProductForm from "./components/ProductForm.vue";
+import AdminNav from "./components/AdminNav.vue";
 </script>
 
 //-------scss------------------------------------
 <style scoped lang="scss">
-@import "../../assets/base.scss";
+@import "@/assets/base.scss";
 .admin-container {
   height: 100%;
-  justify-content: center;
-  align-items: center;
+}
+
+.admin-nav {
+  margin-right: 20px;
 }
 </style>
