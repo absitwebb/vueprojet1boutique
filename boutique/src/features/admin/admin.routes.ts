@@ -9,8 +9,8 @@ export const Admin_Routes: RouteRecordRaw[] = [
     path: "addproduct",
     component: () => import("@/features/admin/views/ProductForm.vue"),
   },
-  //{
-  //path: "productlist",
-  //component: ProductList,
-  // },
+  {
+    path: "productlist",
+    component: () => import("@/features/admin/views/productList.vue"),
+  },
 ];

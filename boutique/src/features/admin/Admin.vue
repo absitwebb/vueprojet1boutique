@@ -24,5 +24,6 @@ import AdminNav from "./components/AdminNav.vue";
 
 .admin-nav {
   margin-right: 20px;
+  flex: 0 0 220px;
 }
 </style>
