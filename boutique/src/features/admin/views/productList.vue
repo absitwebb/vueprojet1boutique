@@ -11,8 +11,14 @@
         :key="product._id"
       >
         <span class="flex-fill">{{ product.title }}</span>
-        <button class="btn btn-primary mr-20">Modifier</button>
-        <button class="btn btn-danger">Supprimer</button>
+        <!--on modifie le produit-->
+        <router-link :to="{ name: 'edit', params: { productId: product._id } }">
+          <button class="btn btn-primary mr-20">Modifier</button>
+        </router-link>
+        <!--on supprime le produit-->
+        <button @click="trydeleteProduct(product._id)" class="btn btn-danger">
+          Supprimer
+        </button>
       </li>
     </ul>
   </div>
@@ -20,9 +26,17 @@
 
 //-------------javascript typecript--------------
 <script setup lang="ts">
-import { useFetchProducts } from "@/shared/services/product.services";
+import {
+  deleteProduct,
+  useFetchProducts,
+} from "@/shared/services/product.services";
 
 const { products, loading, error } = useFetchProducts();
+
+async function trydeleteProduct(productId: string) {
+  await deleteProduct(productId);
+  products.value = products.value!.filter((p) => p._id !== productId);
+}
 </script>
 
 //-------scss------------------------------------

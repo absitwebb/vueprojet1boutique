@@ -1,7 +1,9 @@
 /------html------------------------//
 <template>
   <div class="card">
-    <h3 class="mb-10">Ajouter un article</h3>
+    <h3 class="mb-10">
+      {{ product ? "Editer un produit" : "Créer un produit" }}
+    </h3>
     <form @submit="trySubmit">
       <!--__________________________title_____________________________-->
       <div class="d-flex flex-column mb-20">
@@ -64,6 +66,9 @@ import { useForm, useField } from "vee-validate";
 import { z } from "zod";
 import { toFormValidator } from "@vee-validate/zod";
 import { onMounted, ref } from "vue";
+import { addProduct, getProduct } from "@/shared/services/product.services";
+import type { ProductFormInterface, ProductInterface } from "@/interfaces";
+import { useRoute } from "vue-router";
 
 //on déclare firstInput dans input title avec comme type HTMLInputElement ou null. on mets null cimme valeur par défault
 // on monte firstInput (onMounted) après la validation du formulaire
@@ -71,6 +76,22 @@ const firstInput = ref<HTMLInputElement | null>(null);
 onMounted(() => {
   firstInput.value?.focus();
 });
+//_____________________________________________________________________________
+// on declare route pour vérifier la route active, si on est sur nouvelle recette ou recette edit
+const product = ref<ProductInterface | null>(null);
+const route = useRoute();
+if (route.params.productId) {
+  product.value = await getProduct(route.params.productId as string);
+}
+//si il y à un produit on récupère ses valeurs
+const initialValues = {
+  title: product.value ? product.value.title : "",
+  image: product.value ? product.value.image : "",
+  price: product.value ? product.value.price : 0,
+  description: product.value ? product.value.description : "",
+  category: product.value ? product.value.category : "desktop",
+};
+//________________________________________________________________________________________
 const required = { required_error: "veuillez renseigner ce champs" };
 
 //--------schéma de validation--------------------
@@ -94,6 +115,7 @@ const validationSchema = toFormValidator(
 //---useForm-----------------
 const { handleSubmit, isSubmitting } = useForm({
   validationSchema,
+  initialValues,
 });
 
 //--useField
@@ -106,13 +128,7 @@ const category = useField("category");
 //---submit-----------------
 const trySubmit = handleSubmit(async (formValues, { resetForm }) => {
   try {
-    await fetch("https://restapi.fr/api/projetproducts", {
-      method: "POST",
-      body: JSON.stringify(formValues),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    addProduct(formValues as ProductFormInterface);
 
     resetForm();
     firstInput.value?.focus();
