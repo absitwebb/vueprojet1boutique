@@ -79,3 +79,19 @@ export async function getProduct(productId: string): Promise<ProductInterface> {
   const product = await (await fetch(`${BASE_URL}/${productId}`)).json();
   return product;
 }
+
+export async function editProduct(
+  productId: string,
+  product: ProductFormInterface
+): Promise<ProductInterface> {
+  const updatedProduct = await (
+    await fetch(`${BASE_URL}/${productId}`, {
+      method: "PATCH",
+      body: JSON.stringify(product),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  ).json();
+  return updatedProduct;
+}

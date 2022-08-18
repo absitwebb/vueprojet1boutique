@@ -5,7 +5,10 @@
     <div
       class="admin-main flex-fill d-flex flex-row justify-content-center align-items-center"
     >
-      <RouterView></RouterView>
+      <RouterView v-slot="{ Component, route }">
+        <!--pour rafraichier et pouvoir changer de composant-->
+        <component :is="Component" :key="route.fullPath" />
+      </RouterView>
     </div>
   </div>
 </template>

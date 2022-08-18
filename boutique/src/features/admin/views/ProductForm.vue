@@ -66,9 +66,14 @@ import { useForm, useField } from "vee-validate";
 import { z } from "zod";
 import { toFormValidator } from "@vee-validate/zod";
 import { onMounted, ref } from "vue";
-import { addProduct, getProduct } from "@/shared/services/product.services";
+import {
+  addProduct,
+  editProduct,
+  getProduct,
+} from "@/shared/services/product.services";
 import type { ProductFormInterface, ProductInterface } from "@/interfaces";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { router } from "@/router";
 
 //on déclare firstInput dans input title avec comme type HTMLInputElement ou null. on mets null cimme valeur par défault
 // on monte firstInput (onMounted) après la validation du formulaire
@@ -77,9 +82,12 @@ onMounted(() => {
   firstInput.value?.focus();
 });
 //_____________________________________________________________________________
+//on récupère le router
+//const router = useRouter();
 // on declare route pour vérifier la route active, si on est sur nouvelle recette ou recette edit
 const product = ref<ProductInterface | null>(null);
 const route = useRoute();
+
 if (route.params.productId) {
   product.value = await getProduct(route.params.productId as string);
 }
@@ -128,10 +136,13 @@ const category = useField("category");
 //---submit-----------------
 const trySubmit = handleSubmit(async (formValues, { resetForm }) => {
   try {
-    addProduct(formValues as ProductFormInterface);
-
-    resetForm();
-    firstInput.value?.focus();
+    if (!product.value) {
+      await addProduct(formValues);
+    } else {
+      await editProduct(product.value._id, formValues);
+    }
+    //une fois créer ou modifié les produitsle routeur redirige sur le composant productlist
+    router.push("/admin/productlist");
   } catch (e) {
     console.log(e);
   }
