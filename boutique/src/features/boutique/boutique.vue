@@ -3,17 +3,18 @@
     <Shops
       @update-filter="updateFilter"
       @add-product-to-cart="addProductToCart"
-      @inc-page="state.page++"
-      :products="filteredProducts"
-      :filters="state.filters"
-      :more-results="state.moreResults"
+      @inc-page="incPage"
+      :products="productStore.filteredProducts"
+      :filters="productStore.filters"
+      :more-results="productStore.moreResults"
+      :page="productStore.page"
       class="shop"
     />
     <!--composant pour affichier le panier -->
     <!--si carte est suprérieur à 0 on affiche le reste-->
     <Carte
-      v-if="!cartEmpty"
-      :cart="state.cart"
+      v-if="!cartStore.cartEmpty"
+      :cart="cartStore.cart"
       class="cart"
       @remove-product-from-cart="removeProductFromCart"
     />
@@ -24,33 +25,55 @@
 <script setup lang="ts">
 import Shops from "./components/Shop/Shops.vue";
 import Carte from "./components/Cart/Carte.vue";
-// import des produits qui setrouvent dans le fichier product.ts
-//import data from "../../data/product";
-import { computed, provide, reactive, toRef, watch, watchEffect } from "vue";
-// import de l'interface ProductInterface se trouant dans le fichier  product.interface.ts
-import type { ProductInterface } from "../../interfaces/product.interface";
-import type {
-  filtersInterface,
-  ProductCartInterface,
-  filterUpdate,
-} from "../../interfaces";
-import { DEFAULT_FILTERS } from "../../features/boutique/data/filters";
-import { fectProduct } from "@/shared/services/product.services";
-import { array } from "zod";
-import { pageKey } from "@/shared/services/injectionKeys/pageKey";
+
+import type { filterUpdate } from "@/shared/interfaces";
 
 import { useProducts } from "./stores/productStore";
 import { useCart } from "./stores/cartStore";
 
 //on récupère nos stores (pinia)
 const productStore = useProducts();
+//productStore.seed();
+productStore.fetchProducts();
 const cartStore = useCart();
+
+function updateFilter(filterUpdate: filterUpdate) {
+  productStore.updateFilter(filterUpdate);
+}
+//pour incrémenter la page
+function incPage() {
+  productStore.incPage();
+}
+
+// pour afficher le produit sélectionné
+function addProductToCart(productId: string) {
+  cartStore.addProductToCart(productId);
+}
+//pour supprimer un produit sélectionné
+function removeProductFromCart(productId: string) {
+  cartStore.removeProductFromCart(productId);
+}
+
+productStore.$onAction(({ name, after, args }) => {
+  if (name === "updateFilter" && !args[0].search!) {
+    after(() => {
+      productStore.page = 1;
+      productStore.products = [];
+      productStore.moreResults = true;
+      productStore.fetchProducts();
+    });
+  } else if (name === "incPage") {
+    after(() => {
+      productStore.fetchProducts();
+    });
+  }
+});
 
 //contient tous nos produits
 //ProductInterface permet de vérifier que les produits correspondent aux types définie dans ProductInterface
-const products = reactive<ProductInterface[]>(data);
+//const products = reactive<ProductInterface[]>(data);
 //on met dans cart les produits selectionnés pour le panier
-const cart = reactive<ProductInterface[]>([]);
+//const cart = reactive<ProductInterface[]>([]);
 //au lieu d'avoir deux lignes (si dessus) on mets products et carte dans un objet
 
 // watch(

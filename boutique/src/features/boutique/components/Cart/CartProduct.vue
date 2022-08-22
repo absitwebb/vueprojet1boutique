@@ -16,7 +16,7 @@
 //-------------javascript typecript--------------
 <script setup lang="ts">
 //on importe l'interface ProductCartInterface du fichier productCart.interface.ts
-import type { ProductCartInterface } from "@/interfaces";
+import type { ProductCartInterface } from "@/shared/interfaces";
 
 //on defini les propriétés de product que l'on à récupéré depuis cartProductList.vue
 //entre <> on défini le type typscript

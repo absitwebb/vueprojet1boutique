@@ -59,7 +59,11 @@
 
 //-------------javascript typecript--------------
 <script setup lang="ts">
-import type { filtersInterface, filterUpdate, Category } from "@/interfaces";
+import type {
+  filtersInterface,
+  filterUpdate,
+  Category,
+} from "@/shared/interfaces";
 
 defineProps<{
   filters: filtersInterface;

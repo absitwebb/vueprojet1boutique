@@ -34,7 +34,7 @@
 
 //-------------javascript typecript--------------
 <script setup lang="ts">
-import type { ProductInterface } from "@/interfaces/product.interface";
+import type { ProductInterface } from "@/shared/interfaces";
 
 //on definie les propriétes du produit
 defineProps<{

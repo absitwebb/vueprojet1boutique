@@ -33,7 +33,7 @@
 //-------------javascript typecript--------------
 <script setup lang="ts">
 //on importe l'interface ProductCartInterface du fichier productCart.interface.ts
-import type { ProductCartInterface } from "@/interfaces";
+import type { ProductCartInterface } from "@/shared/interfaces";
 import { computed, reactive } from "vue";
 //on importe le fichier CartProductList
 import CartProductList from "./CartProductList.vue";

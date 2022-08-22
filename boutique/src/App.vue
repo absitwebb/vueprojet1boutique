@@ -27,7 +27,7 @@
 import theheader from "./components/Header.vue";
 import thefooter from "./components/Footer.vue";
 
-import { seed, seed50articles } from "./data/seed";
+import { seed, seed50articles } from "@/shared/data/seed";
 //------reactive----------------------------------
 
 //fonction pour envoyer tous les produits sur restapi.fr

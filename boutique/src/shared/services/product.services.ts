@@ -1,9 +1,9 @@
-import product from "@/data/product";
+//import product from "@/data/product";
 import type {
   filtersInterface,
   ProductFormInterface,
   ProductInterface,
-} from "@/interfaces";
+} from "@/shared/interfaces";
 import { ref, type Ref } from "vue";
 
 const BASE_URL = "https://restapi.fr/api/vueprojectproducts";

@@ -17,7 +17,7 @@
 import CartProduct from "./CartProduct.vue";
 //on importe l'interface ProductCartInterface du fichier productCarte.interface.ts
 
-import type { ProductCartInterface } from "@/interfaces";
+import type { ProductCartInterface } from "@/shared/interfaces";
 
 //on defini les propriétés de cart que l'on à récupéré depuis carte.vue
 //entre <> on défini le type typscript

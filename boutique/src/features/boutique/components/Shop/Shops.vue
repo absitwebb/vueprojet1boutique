@@ -33,6 +33,7 @@
         class="flex-fill scrollable"
         :products="products"
         :more-results="moreResults"
+        :page="page"
         @add-product-to-cart="emit('addProductToCart', $event)"
         @inc-page="emit('incPage')"
       />
@@ -42,18 +43,19 @@
 
 //-------------javascript typecript--------------
 <script setup lang="ts">
-import type { ProductInterface } from "@/interfaces/product.interface";
+import type { ProductInterface } from "@/shared/interfaces";
 import Calc from "@/components/calc.vue";
 //on importe le fichier ShopsProductlist
 import ShopsProductlist from "./ShopsProductlist.vue";
 import ShopFilters from "./shopFilters.vue";
-import type { filtersInterface, filterUpdate } from "@/interfaces";
+import type { filtersInterface, filterUpdate } from "@/shared/interfaces";
 import { reactive } from "vue";
 //on define propriété de la clé product que l'on recoit de app.vue
 //on type products grace à l'interface ProductInterface
 defineProps<{
   products: ProductInterface[];
   filters: filtersInterface;
+  page: number;
   moreResults: boolean;
 }>();
 

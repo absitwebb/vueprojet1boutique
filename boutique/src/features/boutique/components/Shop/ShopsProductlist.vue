@@ -27,16 +27,17 @@
 <script setup lang="ts">
 //on importe le fichier ShopsProduct
 import ShopsProduct from "./ShopsProduct.vue";
-import type { ProductInterface } from "@/interfaces/product.interface";
+import type { ProductInterface } from "@/shared/interfaces";
 import { inject, onMounted, onUpdated, ref, watch } from "vue";
 import { pageKey } from "@/shared/services/injectionKeys/pageKey";
 //on define propriété de la clé product que l'on recoit de app.vue
 //on type products grace à l'interface ProductInterface
 const props = defineProps<{
   products: ProductInterface[];
+  page: number;
   moreResults: boolean;
 }>();
-const page = inject(pageKey)!;
+//const page = inject(pageKey)!;
 
 const scrollablediv = ref<HTMLDivElement | null>(null);
 
@@ -49,11 +50,14 @@ const emit = defineEmits<{
   (e: "incPage"): void;
 }>();
 
-watch(page, () => {
-  if (page.value === 1) {
-    scrollablediv.value?.scrollTo(0, 0);
+watch(
+  () => props.page,
+  () => {
+    if (props.page === 1) {
+      scrollablediv.value?.scrollTo(0, 0);
+    }
   }
-});
+);
 </script>
 
 //-------scss------------------------------------
