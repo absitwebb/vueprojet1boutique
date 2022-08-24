@@ -8,7 +8,7 @@ import { ref, type Ref } from "vue";
 
 const BASE_URL = "https://restapi.fr/api/vueprojectproducts";
 //___________________ on récupère tous les produits filtrés______________________
-export async function fectProduct(
+export async function fetchProductWithFilter(
   filter: filtersInterface,
   page: number
 ): Promise<ProductInterface[] | ProductInterface> {
@@ -28,29 +28,8 @@ export async function fectProduct(
 }
 
 // import données  pour afficher dans productlist de admin
-export function useFetchProducts(): {
-  products: Ref<ProductInterface[] | null>;
-  loading: Ref<boolean>;
-  error: Ref<any>;
-} {
-  const products = ref<ProductInterface[] | null>(null);
-  const loading = ref<boolean>(true);
-  const error = ref<any>(null);
-
-  (async () => {
-    try {
-      products.value = await (await fetch(BASE_URL)).json();
-    } catch (e) {
-      error.value = e;
-    } finally {
-      loading.value = false;
-    }
-  })();
-  return {
-    products,
-    loading,
-    error,
-  };
+export async function fetchProducts(): Promise<ProductInterface[]> {
+  return await (await fetch(BASE_URL)).json();
 }
 // supprimer un produit
 export async function deleteProduct(productId: string): Promise<string> {

@@ -4,7 +4,7 @@ import type {
   ProductInterface,
   filterUpdate,
 } from "@/shared/interfaces";
-import { fectProduct } from "@/shared/services/product.services";
+import { fetchProductWithFilter } from "@/shared/services/product.services";
 import { defineStore } from "pinia";
 import { DEFAULT_FILTERS } from "../data/filters";
 
@@ -39,7 +39,7 @@ export const useProducts = defineStore("produts", {
   actions: {
     async fetchProducts() {
       this.isLoading = true;
-      const products = await fectProduct(this.filters, this.page);
+      const products = await fetchProductWithFilter(this.filters, this.page);
       if (Array.isArray(products)) {
         // on ajoute resultat dans state.products; on rajoute ensuite(...products,...products)des produits dans state.products
         this.products = [...products, ...products];

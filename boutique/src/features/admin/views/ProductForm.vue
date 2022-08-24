@@ -71,9 +71,13 @@ import {
   editProduct,
   getProduct,
 } from "@/shared/services/product.services";
-import type { ProductFormInterface, ProductInterface } from "@/interfaces";
+import type {
+  ProductFormInterface,
+  ProductInterface,
+} from "@/shared/interfaces";
 import { useRoute, useRouter } from "vue-router";
 import { router } from "@/router";
+import { useAdminProducts } from "../stores/AdminProductStore";
 
 //on déclare firstInput dans input title avec comme type HTMLInputElement ou null. on mets null cimme valeur par défault
 // on monte firstInput (onMounted) après la validation du formulaire
@@ -87,7 +91,8 @@ onMounted(() => {
 // on declare route pour vérifier la route active, si on est sur nouvelle recette ou recette edit
 const product = ref<ProductInterface | null>(null);
 const route = useRoute();
-
+// on déclare le store
+const adminProductStore = useAdminProducts();
 if (route.params.productId) {
   product.value = await getProduct(route.params.productId as string);
 }
@@ -137,9 +142,9 @@ const category = useField("category");
 const trySubmit = handleSubmit(async (formValues, { resetForm }) => {
   try {
     if (!product.value) {
-      await addProduct(formValues);
+      await adminProductStore.addProduct(formValues);
     } else {
-      await editProduct(product.value._id, formValues);
+      await adminProductStore.editProduct(product.value._id, formValues);
     }
     //une fois créer ou modifié les produitsle routeur redirige sur le composant productlist
     router.push("/admin/productlist");

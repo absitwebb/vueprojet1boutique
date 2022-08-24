@@ -2,12 +2,12 @@
 <template>
   <div class="container card">
     <h1>liste des produits</h1>
-    <h3 v-if="error">oops une erreur c'est produite</h3>
-    <h3 v-else-if="loading">Chargement ....</h3>
+
+    <h3 v-if="adminProductStore.isLoading">Chargement ....</h3>
     <ul v-else>
       <li
         class="d-flex flex-row align-items-center"
-        v-for="product of products"
+        v-for="product of adminProductStore.products"
         :key="product._id"
       >
         <span class="flex-fill">{{ product.title }}</span>
@@ -26,16 +26,13 @@
 
 //-------------javascript typecript--------------
 <script setup lang="ts">
-import {
-  deleteProduct,
-  useFetchProducts,
-} from "@/shared/services/product.services";
+import { useAdminProducts } from "../stores/AdminProductStore";
 
-const { products, loading, error } = useFetchProducts();
+const adminProductStore = useAdminProducts();
+adminProductStore.fetchProduct();
 
-async function trydeleteProduct(productId: string) {
-  await deleteProduct(productId);
-  products.value = products.value!.filter((p) => p._id !== productId);
+function trydeleteProduct(productId: string) {
+  adminProductStore.deleteProduct(productId);
 }
 </script>
 
