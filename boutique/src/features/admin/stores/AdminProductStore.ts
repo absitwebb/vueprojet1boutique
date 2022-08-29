@@ -1,3 +1,4 @@
+import { useProducts } from "@/features/boutique/stores/productStore";
 import type {
   ProductFormInterface,
   ProductInterface,
@@ -14,12 +15,14 @@ import { array, string } from "zod";
 interface AdminProductState {
   products: ProductInterface[];
   isLoading: boolean;
+  loaded: boolean;
 }
 //----------------store-----------------------
 export const useAdminProducts = defineStore("adminProduct", {
   state: (): AdminProductState => ({
     products: [],
     isLoading: false,
+    loaded: false,
   }),
   actions: {
     async fetchProduct() {
@@ -42,15 +45,19 @@ export const useAdminProducts = defineStore("adminProduct", {
     },
     //pour ajouter un nouveau produits
     async addProduct(productForm: ProductFormInterface) {
+      const productStore = useProducts();
       const newProduct = await addProduct(productForm);
       if (newProduct) {
+        productStore.needRefresh = true;
         this.products.push(newProduct);
       }
     },
     //pour editer et modifier un produit
     async editProduct(productId: string, productForm: ProductFormInterface) {
+      const productStore = useProducts();
       const editedProduct = await editProduct(productId, productForm);
       if (editedProduct) {
+        productStore.needRefresh = true;
         const stateProductIndex = this.products.findIndex(
           (p) => p._id === editedProduct._id
         );
@@ -59,3 +66,11 @@ export const useAdminProducts = defineStore("adminProduct", {
     },
   },
 });
+
+export function initialFetchAdminProducts() {
+  const adminProductStore = useAdminProducts();
+  if (!adminProductStore.loaded) {
+    adminProductStore.fetchProduct();
+    adminProductStore.loaded = true;
+  }
+}

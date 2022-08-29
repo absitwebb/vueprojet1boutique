@@ -34,7 +34,8 @@ import { useCart } from "./stores/cartStore";
 //on récupère nos stores (pinia)
 const productStore = useProducts();
 //productStore.seed();
-productStore.fetchProducts();
+//maintenant fetchProducts() est appeler à partir de routes.ts
+// productStore.fetchProducts();
 const cartStore = useCart();
 
 function updateFilter(filterUpdate: filterUpdate) {
@@ -55,7 +56,7 @@ function removeProductFromCart(productId: string) {
 }
 
 productStore.$onAction(({ name, after, args }) => {
-  if (name === "updateFilter" && !args[0].search!) {
+  if (name === "updateFilter" && args[0].search === undefined) {
     after(() => {
       productStore.page = 1;
       productStore.products = [];

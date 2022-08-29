@@ -15,6 +15,8 @@ interface ProductSate {
   page: number;
   isLoading: boolean;
   moreResults: boolean;
+  loaded: boolean;
+  needRefresh: boolean;
 }
 
 export const useProducts = defineStore("produts", {
@@ -25,6 +27,8 @@ export const useProducts = defineStore("produts", {
     page: 1,
     isLoading: true,
     moreResults: true,
+    loaded: false,
+    needRefresh: false,
   }),
 
   getters: {
@@ -72,3 +76,16 @@ export const useProducts = defineStore("produts", {
     },
   },
 });
+
+export function initialFetchProducts() {
+  const productStore = useProducts();
+  if (!productStore.loaded || productStore.needRefresh) {
+    productStore.fetchProducts();
+    productStore.loaded = true;
+    if (productStore.needRefresh) {
+      productStore.page = 1;
+      productStore.products = [];
+      productStore.needRefresh = false;
+    }
+  }
+}

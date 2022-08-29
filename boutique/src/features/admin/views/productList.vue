@@ -29,7 +29,8 @@
 import { useAdminProducts } from "../stores/AdminProductStore";
 
 const adminProductStore = useAdminProducts();
-adminProductStore.fetchProduct();
+//.fetchProduct()est appelé à partir de routes.ts
+// adminProductStore.fetchProduct();
 
 function trydeleteProduct(productId: string) {
   adminProductStore.deleteProduct(productId);
